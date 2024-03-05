@@ -1,6 +1,8 @@
 //Controllers
 import { utilisateurs } from "../models/relations.js";
 import roles from "../models/roles.js";
+//Module pour les resultats de la validation
+import { validationResult } from "express-validator";
 
 export const utilisateursList = async (req, res) => {
 
@@ -8,7 +10,32 @@ export const utilisateursList = async (req, res) => {
     res.status(200).json({ data: tousLesutilisateurs, message:'Tout semble marcher' })
 }
 
+//find user by id
+export const userID = async (req, res) =>{
+    const { id } = req.params;
+
+    if (!parseInt(id)) {
+        return res.status(404).json({ message: "Ce rôle n'existe pas" });
+    }
+
+    try {
+        const role = await utilisateurs.findByPk(id); 
+        if (!role) {
+            return res.status(404).json({ message: "Ce rôle n'existe pas" }); 
+        }
+        res.status(200).json({ data: role, message: 'tout semble marcher' });
+
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 export const adduser = async (req, res) => {
+     //Recuperation des resultats de la validation 
+     const errors = validationResult(req)
+     if (!errors.isEmpty()) {
+         return res.status(400).json({ errors: errors.array() });
+     }
 
     const newuser = req.body
     try {
@@ -26,6 +53,12 @@ export const updateuser = async (req, res) =>{
     
     const {id} = req.params
     const newvalue = req.body
+
+     //Recuperation des resultats de la validation 
+     const errors = validationResult(req)
+     if (!errors.isEmpty()) {
+         return res.status(400).json({ errors: errors.array() });
+     }
 
 
     if (!parseInt(id)) return res.status(404).json({message: "user not found"})

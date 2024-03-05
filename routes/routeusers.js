@@ -1,14 +1,16 @@
 //Importer le router
 import { Router } from "express";
-import { adduser, deleteuser, utilisateursList, updateuser } from "../controllers/utilisateurs.js";
+import { adduser, deleteuser, utilisateursList, updateuser,userID } from "../controllers/utilisateurs.js";
+import userRules from "../validations/validationUser.js";
 
 //Instance de router
 const routeruser = Router()
 
 routeruser
     .get("/", utilisateursList)
-    .post("/add", adduser)
-    .put("/:id", updateuser)
+    .get("/:id", userID)
+    .post("/add", userRules, adduser)
+    .put("/:id", userRules, updateuser)
     .delete("/:id", deleteuser)
 
 

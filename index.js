@@ -36,9 +36,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 
 
-app.use('/utilisateurs', routeruser)
+app.use('/utilisateurs' , routeruser)
 
-app.use("/roles",router)
+app.use("/roles" ,router)
 
 const port = 5000
 

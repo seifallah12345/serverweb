@@ -11,7 +11,7 @@ const utilisateurs = database.define('utilisateurs', {
     email: { type: DataTypes.STRING, allowNull: false },
     telephone: { type: DataTypes.STRING, allowNull: false }, // Assuming telephone is a string
     mot_de_passe: { type: DataTypes.STRING, allowNull: false },
-    date_de_naissance: { type: DataTypes.STRING, allowNull: false },
+    date_de_naissance: { type: DataTypes.DATE, allowNull: false },
     photo: { type: DataTypes.STRING, allowNull: false }
 });
 

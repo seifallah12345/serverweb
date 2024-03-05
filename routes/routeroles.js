@@ -1,14 +1,17 @@
 //Importer le router
 import { Router } from "express";
-import { addrole, deleteroles, roleList, updateroles } from "../controllers/roles.js";
+import { addrole, deleteroles, roleList, updateroles,roleID } from "../controllers/roles.js";
+
+import rolesRules from "../validations/validationRoles.js";
 
 //Instance de router
 const router = Router()
 
 router
     .get("/", roleList)
-    .post("/add", addrole)
-    .put("/:id", updateroles)
+    .get("/:id" , roleID)
+    .post("/add", rolesRules, addrole)
+    .put("/:id", rolesRules, updateroles)
     .delete("/:id", deleteroles)
 
 
