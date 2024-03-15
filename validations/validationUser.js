@@ -1,14 +1,10 @@
 import { body } from "express-validator";
 
-// Regex for name and surname
-const nameRegex = /^(([A-Za-z]+[-']?)*([A-Za-z]+)?\s)+([A-Za-z]+[-']?)*([A-Za-z]+)?$/;
+const nameRegex = /^[a-zA-ZÀ-ÿ]+([-']?[a-zA-ZÀ-ÿ]+)?(\s+[a-zA-ZÀ-ÿ]+([-']?[a-zA-ZÀ-ÿ]+)?)*$/;
 
-// Regex for password
 const mdpRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
 
-// Custom phone number validator
 const isValidPhoneNumber = (value) => {
-    // Define your preferred phone number pattern (e.g., North American format)
     const phoneNumberPattern = /^\+(?:[0-9] ?){6,14}[0-9]$/;
     return phoneNumberPattern.test(value);
 };

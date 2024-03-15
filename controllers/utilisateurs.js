@@ -4,6 +4,9 @@ import roles from "../models/roles.js";
 //Module pour les resultats de la validation
 import { validationResult } from "express-validator";
 
+//Importer le module de hachage
+import bcrypt from 'bcryptjs'
+
 export const utilisateursList = async (req, res) => {
 
     const tousLesutilisateurs = await utilisateurs.findAll()
@@ -37,7 +40,13 @@ export const adduser = async (req, res) => {
          return res.status(400).json({ errors: errors.array() });
      }
 
-    const newuser = req.body
+      //Recuperation des informations de l'utilisateur
+    const { nom, prenom, email, mot_de_passe, date_de_naissance, telephone, photo } = req.body
+
+    //Hachage du mot de passe 
+    const mdpHache = bcrypt.hashSync(mot_de_passe, 10)
+
+    const newuser = { nom, prenom, email, mot_de_passe: mdpHache, date_de_naissance, telephone, photo }
     try {
         await utilisateurs.create(newuser)
         res.status(201).json({message : "new user added"})
